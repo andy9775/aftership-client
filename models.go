@@ -45,7 +45,7 @@ type Tracking struct {
 	DestinationCountryIso3        string        `json:"destination_country_iso3"`
 	CourierDestinationCountryIso3 string        `json:"courier_destination_country_iso3"`
 	Emails                        []interface{} `json:"emails"`
-	ExpectedDelivery              interface{}   `json:"expected_delivery"`
+	ExpectedDelivery              *time.Time    `json:"expected_delivery"`
 	Ios                           []interface{} `json:"ios"`
 	Note                          interface{}   `json:"note"`
 	OrderID                       interface{}   `json:"order_id"`

@@ -20,7 +20,7 @@ type Aftership interface {
 }
 
 // New creates a new Aftership client
-func New(apiKey string) Aftership {
+func New(apiKey string) (Aftership, error) {
 	client := &http.Client{
 		Transport: &http.Transport{
 			MaxIdleConnsPerHost: 20,
@@ -28,7 +28,21 @@ func New(apiKey string) Aftership {
 		Timeout: 5 * time.Second,
 	}
 
-	return &aftership{apiKey: apiKey, client: client}
+	// ping aftership to check api key validity
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, fmt.Errorf("could not establish the http client")
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("aftership-api-key", apiKey)
+
+	resp, err := client.Do(req)
+	if err != nil || resp.StatusCode != 200 {
+		return nil, fmt.Errorf("could not connect to afterhip (check api key)")
+	}
+
+	return &aftership{apiKey: apiKey, client: client}, nil
+
 }
 
 // ================================================= request =================================================
