@@ -119,15 +119,12 @@ func (r *NewTrackingRequest) toJSON() (io.Reader, error) {
 type NewTrackingRequest struct {
 	Slug string `json:"slug"`
 	// TrackingNumber is required
-	TrackingNumber string   `json:"tracking_number"`
-	Title          string   `json:"title"`
-	Smses          []string `json:"smses"`
-	Emails         []string `json:"emails"`
-	OrderID        string   `json:"order_id"`
-	OrderIDPath    string   `json:"order_id_path"`
-	CustomFields   struct {
-		ProductName  string `json:"product_name"`
-		ProductPrice string `json:"product_price"`
-	} `json:"custom_fields"`
-	Language string `json:"language"`
+	TrackingNumber string            `json:"tracking_number"`
+	Title          string            `json:"title"`
+	Smses          []string          `json:"smses"`
+	Emails         []string          `json:"emails"`
+	OrderID        string            `json:"order_id"`
+	OrderIDPath    string            `json:"order_id_path"`
+	CustomFields   map[string]string `json:"custom_fields"`
+	Language       string            `json:"language"`
 }
